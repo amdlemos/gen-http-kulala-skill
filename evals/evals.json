@@ -1,0 +1,113 @@
+{
+  "skill_name": "gen-http",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "gen-http DebugCompanyListController",
+      "expected_output": "A .http file named debug-company-list.http in the project root containing @baseUrl/@token variables, GET request to /admin/debug/companies-list with pagination query params and Authorization header, and a comment documenting the available filters.",
+      "files": [],
+      "assertions": [
+        {
+          "name": "contains-baseUrl-variable",
+          "description": "File starts with @baseUrl = http://localhost:8000"
+        },
+        {
+          "name": "contains-token-variable",
+          "description": "File declares @token variable"
+        },
+        {
+          "name": "uses-correct-http-method-and-path",
+          "description": "Contains GET {{baseUrl}}/admin/debug/companies-list"
+        },
+        {
+          "name": "includes-auth-header",
+          "description": "Contains Authorization: Bearer {{token}}"
+        },
+        {
+          "name": "includes-pagination-params",
+          "description": "URL includes per_page and page query params"
+        },
+        {
+          "name": "documents-filters-in-comment",
+          "description": "Comment line documents available filters: id, cnpj, business_name, per_page, page"
+        },
+        {
+          "name": "uses-request-separator",
+          "description": "File contains ### separator"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "gen-http DebugPlanSubscriptionUpdateController",
+      "expected_output": "A .http file with a PATCH request to /admin/debug/plan-subscription, Authorization and Content-Type: application/json headers, and a JSON body with plan_subscription_id and plan_id fields.",
+      "files": [],
+      "assertions": [
+        {
+          "name": "contains-baseUrl-variable",
+          "description": "File starts with @baseUrl = http://localhost:8000"
+        },
+        {
+          "name": "contains-token-variable",
+          "description": "File declares @token variable"
+        },
+        {
+          "name": "uses-correct-http-method-and-path",
+          "description": "Contains PATCH {{baseUrl}}/admin/debug/plan-subscription"
+        },
+        {
+          "name": "includes-auth-header",
+          "description": "Contains Authorization: Bearer {{token}}"
+        },
+        {
+          "name": "includes-content-type-header",
+          "description": "Contains Content-Type: application/json"
+        },
+        {
+          "name": "json-body-has-plan-subscription-id",
+          "description": "JSON body contains the plan_subscription_id field"
+        },
+        {
+          "name": "json-body-has-plan-id",
+          "description": "JSON body contains the plan_id field"
+        },
+        {
+          "name": "uses-request-separator",
+          "description": "File contains ### separator"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "gen-http DebugInvoiceServiceDetailsController",
+      "expected_output": "A .http file covering both routes: GET /admin/debug/invoice-service-details and GET /admin/debug/invoice-service-details/tomador-types, each with Authorization header, separated by ###.",
+      "files": [],
+      "assertions": [
+        {
+          "name": "contains-baseUrl-variable",
+          "description": "File starts with @baseUrl = http://localhost:8000"
+        },
+        {
+          "name": "contains-token-variable",
+          "description": "File declares @token variable"
+        },
+        {
+          "name": "includes-main-route",
+          "description": "Contains GET {{baseUrl}}/admin/debug/invoice-service-details"
+        },
+        {
+          "name": "includes-secondary-route",
+          "description": "Contains GET {{baseUrl}}/admin/debug/invoice-service-details/tomador-types"
+        },
+        {
+          "name": "both-routes-have-auth-header",
+          "description": "Both request blocks include Authorization: Bearer {{token}}"
+        },
+        {
+          "name": "uses-multiple-separators",
+          "description": "File contains at least two ### separators for two separate request blocks"
+        }
+      ]
+    }
+  ]
+}
