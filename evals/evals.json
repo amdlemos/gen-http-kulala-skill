@@ -3,8 +3,8 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "gen-http DebugCompanyListController",
-      "expected_output": "A .http file named debug-company-list.http in the project root containing @baseUrl/@token variables, GET request to /admin/debug/companies-list with pagination query params and Authorization header, and a comment documenting the available filters.",
+      "prompt": "gen-http for the UserController",
+      "expected_output": "A .http file named user.http in the resolved http/ folder containing @baseUrl/@token variables, a GET request to the list endpoint with pagination query params and an Authorization header, and a comment documenting the available filters. Paths include the correct route-file mount prefix (e.g. /api).",
       "files": [],
       "assertions": [
         {
@@ -16,31 +16,31 @@
           "description": "File declares @token variable"
         },
         {
-          "name": "uses-correct-http-method-and-path",
-          "description": "Contains GET {{baseUrl}}/admin/debug/companies-list"
+          "name": "uses-get-with-mount-prefix",
+          "description": "Contains a GET {{baseUrl}}/... request whose path includes the correct route-file mount prefix (e.g. /api)"
         },
         {
           "name": "includes-auth-header",
-          "description": "Contains Authorization: Bearer {{token}}"
+          "description": "Contains Authorization: Bearer {{token}} for authenticated routes"
         },
         {
           "name": "includes-pagination-params",
-          "description": "URL includes per_page and page query params"
+          "description": "A list/index endpoint appends per_page and page query params"
         },
         {
           "name": "documents-filters-in-comment",
-          "description": "Comment line documents available filters: id, cnpj, business_name, per_page, page"
+          "description": "A comment line documents the available filters for the GET endpoint"
         },
         {
           "name": "uses-request-separator",
-          "description": "File contains ### separator"
+          "description": "File contains ### separator between/after request blocks"
         }
       ]
     },
     {
       "id": 2,
-      "prompt": "gen-http DebugPlanSubscriptionUpdateController",
-      "expected_output": "A .http file with a PATCH request to /admin/debug/plan-subscription, Authorization and Content-Type: application/json headers, and a JSON body with plan_subscription_id and plan_id fields.",
+      "prompt": "generate the http file for the endpoints in this controller (a create/update controller with a JSON body)",
+      "expected_output": "A .http file with a POST or PATCH request to the resolved full path, Authorization and Content-Type: application/json headers, and a JSON body whose fields and placeholder values are inferred from the controller's validation rules or FormRequest.",
       "files": [],
       "assertions": [
         {
@@ -52,8 +52,8 @@
           "description": "File declares @token variable"
         },
         {
-          "name": "uses-correct-http-method-and-path",
-          "description": "Contains PATCH {{baseUrl}}/admin/debug/plan-subscription"
+          "name": "uses-write-method-with-full-path",
+          "description": "Contains a POST/PUT/PATCH {{baseUrl}}/... request with the correct full path"
         },
         {
           "name": "includes-auth-header",
@@ -64,12 +64,8 @@
           "description": "Contains Content-Type: application/json"
         },
         {
-          "name": "json-body-has-plan-subscription-id",
-          "description": "JSON body contains the plan_subscription_id field"
-        },
-        {
-          "name": "json-body-has-plan-id",
-          "description": "JSON body contains the plan_id field"
+          "name": "json-body-matches-validation",
+          "description": "JSON body contains fields inferred from validation rules with sensible placeholder values by type"
         },
         {
           "name": "uses-request-separator",
@@ -79,8 +75,8 @@
     },
     {
       "id": 3,
-      "prompt": "gen-http DebugInvoiceServiceDetailsController",
-      "expected_output": "A .http file covering both routes: GET /admin/debug/invoice-service-details and GET /admin/debug/invoice-service-details/tomador-types, each with Authorization header, separated by ###.",
+      "prompt": "create requests for a controller that registers multiple routes (e.g. index plus a secondary action)",
+      "expected_output": "A .http file covering every route the controller registers, each with the correct full path and an Authorization header, separated by ### into distinct request blocks.",
       "files": [],
       "assertions": [
         {
@@ -92,20 +88,20 @@
           "description": "File declares @token variable"
         },
         {
-          "name": "includes-main-route",
-          "description": "Contains GET {{baseUrl}}/admin/debug/invoice-service-details"
+          "name": "covers-all-registered-routes",
+          "description": "Every route registered for the controller has its own request block"
         },
         {
-          "name": "includes-secondary-route",
-          "description": "Contains GET {{baseUrl}}/admin/debug/invoice-service-details/tomador-types"
+          "name": "all-routes-have-auth-header",
+          "description": "Each authenticated request block includes Authorization: Bearer {{token}}"
         },
         {
-          "name": "both-routes-have-auth-header",
-          "description": "Both request blocks include Authorization: Bearer {{token}}"
+          "name": "route-params-use-variables",
+          "description": "Any {id}-style route params are turned into @-variables referenced in the URL"
         },
         {
           "name": "uses-multiple-separators",
-          "description": "File contains at least two ### separators for two separate request blocks"
+          "description": "File contains at least two ### separators for separate request blocks"
         }
       ]
     }
